@@ -1,31 +1,26 @@
 package guru.springframework.spring5webapp.domain;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by jt on 12/22/19.
- */
 @Entity
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String firstName;
     private String lastName;
-
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
-
-    public Author() {
-    }
+    private Set<Book> books;
 
     public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.books = new HashSet<>();
     }
 
     public Long getId() {
@@ -52,22 +47,12 @@ public class Author {
         this.lastName = lastName;
     }
 
-    public Set<Book> getBooks() {
+    public Set<Book> getBookSet() {
         return books;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", books=" + books +
-                '}';
+    public void setBookSet(Set<Book> bookSet) {
+        this.books = bookSet;
     }
 
     @Override
@@ -83,5 +68,15 @@ public class Author {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                '}';
     }
 }

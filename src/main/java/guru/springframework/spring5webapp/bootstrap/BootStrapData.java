@@ -9,9 +9,6 @@ import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by jt on 12/23/19.
- */
 @Component
 public class BootStrapData implements CommandLineRunner {
 
@@ -27,34 +24,45 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        System.out.println("Started in Bootstrap");
-
+        Author eric = new Author("Eric","Evans");
+        Book book_eric = new Book("Book1","13322312312");
         Publisher publisher = new Publisher();
-        publisher.setName("SFG Publishing");
-        publisher.setCity("St Petersburg");
-        publisher.setState("FL");
+
+        publisher.setName("Publisher A");
+        publisher.setCity("Moscow");
+        publisher.setAddressLine1("Gorky Park");
 
         publisherRepository.save(publisher);
 
-        System.out.println("Publisher Count: " + publisherRepository.count());
+        eric.getBookSet().add(book_eric);
 
-        Author eric = new Author("Eric", "Evans");
-        Book ddd = new Book("Domain Driven Design", "123123");
-        eric.getBooks().add(ddd);
-        ddd.getAuthors().add(eric);
+        book_eric.getAuthorSet().add(eric);
+        book_eric.setPublisher(publisher);
+
+        publisher.getBooks().add(book_eric);
 
         authorRepository.save(eric);
-        bookRepository.save(ddd);
+        bookRepository.save(book_eric);
 
-        Author rod = new Author("Rod", "Johnson");
-        Book noEJB = new Book("J2EE Development without EJB", "3939459459");
-        rod.getBooks().add(noEJB);
-        noEJB.getAuthors().add(rod);
+        Author rod = new Author("Rod","Johnson");
+        Book book_rod = new Book("Book2","133223366312");
+
+        rod.getBookSet().add(book_rod);
+
+        book_rod.getAuthorSet().add(rod);
+        book_rod.setPublisher(publisher);
+
+        publisher.getBooks().add(book_rod);
 
         authorRepository.save(rod);
-        bookRepository.save(noEJB);
+        bookRepository.save(book_rod);
 
-        System.out.println("Number of Books: " + bookRepository.count());
+        System.out.println("Started bootstrap");
+        System.out.println("Num. of books = " + bookRepository.count());
+        System.out.println("Num. of authors = " + authorRepository.count());
+        System.out.println("Num. of publishers = " + publisherRepository.count());
+        System.out.println("Num. of " + publisher.getName() + " books = " +
+                publisher.getBooks().size());
+
     }
 }

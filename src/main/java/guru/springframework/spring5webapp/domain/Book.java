@@ -4,54 +4,30 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by jt on 12/22/19.
- */
 @Entity
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String title;
+    private String name;
     private String isbn;
-
     @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
+    @JoinTable(name = "author_book",
+            joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
+    private Set<Author> authors;
+
+    @ManyToOne
+    private Publisher publishers;
+
+    public Book(String name, String isbn) {
+        this.name = name;
+        this.isbn = isbn;
+        this.authors = new HashSet<>();
+    }
 
     public Book() {
-    }
-
-    public Book(String title, String isbn) {
-        this.title = title;
-        this.isbn = isbn;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public Set<Author> getAuthors() {
@@ -62,14 +38,44 @@ public class Book {
         this.authors = authors;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
-                '}';
+    public Publisher getPublisher() {
+        return publishers;
+    }
+
+    public void setPublisher(Publisher publishers) {
+        this.publishers = publishers;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String firstName) {
+        this.name = firstName;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String lastName) {
+        this.isbn = lastName;
+    }
+
+    public Set<Author> getAuthorSet() {
+        return authors;
+    }
+
+    public void setAuthorSet(Set<Author> authorSet) {
+        this.authors = authorSet;
     }
 
     @Override
@@ -85,5 +91,15 @@ public class Book {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", firstName='" + name + '\'' +
+                ", lastName='" + isbn + '\'' +
+                ", authors=" + authors +
+                '}';
     }
 }

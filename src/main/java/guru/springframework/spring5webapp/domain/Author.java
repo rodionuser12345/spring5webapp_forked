@@ -1,8 +1,10 @@
 package guru.springframework.spring5webapp.domain;
 
-import org.hibernate.annotations.GeneratorType;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +18,9 @@ public class Author {
     private String lastName;
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
+
+    public Author() {
+    }
 
     public Author(String firstName, String lastName) {
         this.firstName = firstName;

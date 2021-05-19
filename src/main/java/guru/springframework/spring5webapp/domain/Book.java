@@ -19,7 +19,7 @@ public class Book {
     private Set<Author> authors;
 
     @ManyToOne
-    private Publisher publishers;
+    private Publisher publisher;
 
     public Book(String name, String isbn) {
         this.name = name;
@@ -39,11 +39,11 @@ public class Book {
     }
 
     public Publisher getPublisher() {
-        return publishers;
+        return publisher;
     }
 
     public void setPublisher(Publisher publishers) {
-        this.publishers = publishers;
+        this.publisher = publishers;
     }
 
     public Long getId() {
